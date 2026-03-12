@@ -94,6 +94,14 @@ h4 {
     gap: 2rem;
 }
 
+@media (max-width: 768px) {
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 1.5rem;
+    }
+}
+
 .logo {
     font-size: 1.2rem;
     font-weight: 900;
@@ -139,6 +147,12 @@ h4 {
     align-items: center;
     gap: 0.5rem;
     justify-self: end;
+}
+
+@media (max-width: 768px) {
+    .nav-icons {
+        gap: 0.25rem;
+    }
 }
 
 .nav-icon-btn {
@@ -1339,20 +1353,10 @@ footer a:hover {
 /* ─── Mobile Toggle ────────────────────────────────────────────── */
 .mobile-toggle {
     display: none;
-    flex-direction: column;
-    gap: 6px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 10px;
     z-index: 1100;
-}
-
-.mobile-toggle span {
-    width: 25px;
-    height: 2px;
-    background: var(--primary);
-    transition: var(--transition);
 }
 
 /* Responsive */
@@ -1380,11 +1384,14 @@ footer a:hover {
         top: 0;
         right: -100%;
         width: 100%;
+        max-width: 400px;
         height: 100vh;
-        background: white;
+        background: #111111;
         flex-direction: column;
         justify-content: center;
+        padding: 4rem;
         transition: var(--transition);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .nav-wrapper.active {
@@ -1392,29 +1399,72 @@ footer a:hover {
     }
 
     .nav-links {
+        display: none;
+    }
+
+    .nav-links-mobile {
+        list-style: none;
+        display: flex;
         flex-direction: column;
         gap: 2rem;
     }
 
-    .nav-links a {
-        font-size: 1.5rem;
-        font-weight: 600;
+    .nav-links-mobile a {
+        text-decoration: none;
+        color: white;
+        font-size: 1.8rem;
+        font-weight: 700;
+        font-family: 'Playfair Display', serif;
+        transition: color 0.3s ease;
+    }
+
+    .nav-links-mobile a:hover {
+        color: var(--accent);
     }
 
     .hero-title {
-        font-size: 3rem;
+        font-size: 2.8rem;
+        margin-bottom: 1.5rem;
     }
 
-    .vision-text h2 {
-        font-size: 2.5rem;
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .vision-body {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .vision-body h2 {
+        font-size: 2.22rem;
+    }
+
+    .project-card-h {
+        width: 85vw;
+    }
+
+    .form-wrapper {
+        grid-template-columns: 1fr;
+        padding: 3rem 2rem;
+        gap: 3rem;
+        border-radius: 30px;
     }
 
     .cta-banner {
-        padding: 3rem;
+        padding: 3rem 2rem;
+    }
+
+    .cta-banner h2 {
+        font-size: 2.2rem;
     }
 
     .section-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+    }
+
+    footer .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
     }
 }
 

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Model Diagnostic | Blue Ocean International</title>
+    <style>
+        body {
+            margin: 0;
+            background: #020617;
+            color: #64FFDA;
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #64FFDA;
+            pointer-events: none;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+    </style>
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+          }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="info">
+        <h1>3D Diagnostic View</h1>
+        <p>File: <strong>model.glb</strong></p>
+        <p id="status">Status: Initializing...</p>
+        <p>Use mouse to rotate and zoom.</p>
+    </div>
+
+    <div id="canvas-container"></div>
+    <div id="loader" class="loading">
+        <p id="percent">0%</p>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        const container = document.getElementById('canvas-container');
+        const statusText = document.getElementById('status');
+        const percentText = document.getElementById('percent');
+
+        // Scene
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x020617);
+
+        // Camera
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 10, 20);
+
+        // Renderer
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        // Controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+        scene.add(ambientLight);
+
+        const pointLight = new THREE.PointLight(0x64FFDA, 2);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
+
+        // Loader
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath('https://unpkg.com/three@0.160.0/examples/jsm/libs/draco/');
+
+        const loader = new GLTFLoader();
+        loader.setDRACOLoader(dracoLoader);
+
+        statusText.innerText = "Status: Fetching model...";
+
+        loader.load(
+            'model.glb',
+            (gltf) => {
+                const model = gltf.scene;
+
+                // Auto-center and scale
+                const box = new THREE.Box3().setFromObject(model);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+
+                model.position.sub(center);
+                scene.add(model);
+
+                document.getElementById('loader').style.display = 'none';
+                statusText.innerText = "Status: Ready (Model Loaded)";
+                console.log("Model loaded successfully", gltf);
+            },
+            (xhr) => {
+                if (xhr.total > 0) {
+                    const progress = Math.round((xhr.loaded / xhr.total) * 100);
+                    percentText.innerText = progress + "%";
+                }
+            },
+            (error) => {
+                console.error(error);
+                let msg = "Unknown Error";
+                if (error.message) msg = error.message;
+                else if (typeof error === 'string') msg = error;
+                else msg = JSON.stringify(error);
+
+                statusText.innerText = "Status: ERROR - " + msg;
+                statusText.style.color = "red";
+
+                if (window.location.protocol === 'file:') {
+                    const help = document.createElement('p');
+                    help.style.color = '#fff';
+                    help.innerHTML = '<strong>Tip:</strong> Browsers often block 3D models when opening files directly (file://). <br>Try running a local server (e.g., <code>npx serve</code> or <code>python -m http.server</code>) or use a "CORS Disabler" extension during development.';
+                    document.getElementById('info').appendChild(help);
+                }
+            }
+        );
+
+        // Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+
+</html>

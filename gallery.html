@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Gallery | Blue Ocean International - Malaysia's Finest Landmarks</title>
+    <meta name="description"
+        content="Explore our portfolio of iconic construction projects across Malaysia. From luxury residential villas to Grade A commercial towers and industrial hubs.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://blueoceaninternational.com.my/gallery.html">
+    <meta property="og:title" content="Project Gallery | Blue Ocean International">
+    <meta property="og:description"
+        content="A showcase of engineering excellence and architectural milestones in Malaysia.">
+    <meta property="og:image" content="images/hero.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root {
+            --primary: #020617;
+            /* Dark Navy */
+            --accent: #00C8C8;
+            /* Teal */
+            --text-color: #E2E8F0;
+            /* Light Gray */
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            background-color: var(--primary);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            color: white;
+        }
+
+        .gallery-hero {
+            padding: 10rem 0 5rem;
+            text-align: center;
+            background: #020617;
+            color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 4rem 0;
+            background: #020617;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(10, 42, 67, 0.9), transparent);
+            color: white;
+            transition: var(--transition);
+        }
+
+        .gallery-caption h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-caption p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: #94A3B8;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: var(--primary);
+            border-color: var(--accent);
+        }
+
+        .gallery-section {
+            background: #020617;
+        }
+
+        .eyebrow {
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">BLUE OCEAN<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="index.html#contact" class="btn-contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="gallery-hero">
+        <div class="container">
+            <span class="eyebrow">Milestones</span>
+            <h1 class="section-title">Project Gallery</h1>
+            <p>Showcasing our journey of excellence across Malaysia.</p>
+        </div>
+    </div>
+
+    <section class="gallery-section">
+        <div class="container">
+            <div class="filter-tabs">
+                <button class="filter-btn active">All Projects</button>
+                <button class="filter-btn">Residential</button>
+                <button class="filter-btn">Commercial</button>
+                <button class="filter-btn">Industrial</button>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Residential -->
+                <div class="gallery-item residential">
+                    <img src="images/project-residential.png" alt="Luxury Residential">
+                    <div class="gallery-caption">
+                        <h3>The Horizon Villas</h3>
+                        <p>Kuala Lumpur | Luxury Residential</p>
+                    </div>
+                </div>
+                <!-- Commercial -->
+                <div class="gallery-item commercial">
+                    <img src="images/project-commercial.png" alt="Premium Commercial Office">
+                    <div class="gallery-caption">
+                        <h3>Plaza Blue Ocean</h3>
+                        <p>Petaling Jaya | Grade A Office Tower</p>
+                    </div>
+                </div>
+                <!-- Industrial -->
+                <div class="gallery-item industrial">
+                    <img src="images/project-industrial.png" alt="Modern Warehouse Hub">
+                    <div class="gallery-caption">
+                        <h3>Logistics Central</h3>
+                        <p>Shah Alam | Industrial Distribution Hub</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Blue Ocean International. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple entrance animation for gallery items
+        gsap.to('.gallery-item', {
+            opacity: 1,
+            y: 0,
+            stagger: 0.2,
+            duration: 1,
+            ease: "power3.out",
+            delay: 0.5
+        });
+
+        // Filter Functionality Placeholder
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

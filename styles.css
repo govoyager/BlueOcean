@@ -775,7 +775,7 @@ section {
 /* responsive */
 @media (max-width: 900px) {
     .vision-section {
-        min-height: 400vh; /* Slightly less scroll space needed on mobile */
+        min-height: 100vh; /* Don't force massive height here, let pinning handle it */
     }
 
     .vision-bechtel {
@@ -1415,7 +1415,9 @@ footer a:hover {
 
 @media (max-width: 768px) {
     .mobile-toggle {
-        display: flex;
+        display: flex !important;
+        visibility: visible;
+        opacity: 1;
     }
 
     .nav-wrapper {
@@ -1479,7 +1481,7 @@ footer a:hover {
     }
 
     .project-card-h {
-        width: 85vw;
+        width: 78vw; /* Show a bit of the next card */
     }
 
     .form-wrapper {

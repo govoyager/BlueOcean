@@ -166,10 +166,10 @@ if (visionSection && visionBody) {
     const visionST = ScrollTrigger.create({
         trigger: ".vision-section",
         start: "top top",
-        end: "+=400%", // 4x height for the 5-pillar transition
+        end: () => `+=${window.innerHeight * 4}`, // Exactly 4 viewport heights for 5 phases
         pin: ".vision-outer",
-        scrub: true,
-        markers: false, // Set to true for debugging if needed
+        scrub: 1, // Smoother scrub
+        markers: false,
         onUpdate: (self) => {
             const progress = self.progress;
             const phaseIndex = Math.min(

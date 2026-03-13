@@ -105,6 +105,9 @@ gsap.ticker.add((time) => {
 });
 gsap.ticker.lagSmoothing(0);
 
+// Global ScrollTrigger Config for mobile stability
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 // Scroll Scrub for Hero Video
 gsap.to('.hero-bg-video', {
     scale: 1.2,
@@ -170,6 +173,7 @@ if (visionSection && visionBody) {
         pin: ".vision-outer",
         scrub: 1, // Smoother scrub
         markers: false,
+        anticipatePin: 1,
         onUpdate: (self) => {
             const progress = self.progress;
             const phaseIndex = Math.min(

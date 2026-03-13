@@ -194,7 +194,13 @@ if (visionSection && visionBody) {
 
         // 2. Update sidebar
         sidebarItems.forEach((item, i) => {
-            if (i === index) item.classList.add('active');
+            if (i === index) {
+                item.classList.add('active');
+                // Auto-scroll active tab into view on mobile
+                if (window.innerWidth <= 900) {
+                    item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            }
             else item.classList.remove('active');
         });
 
